@@ -1,0 +1,37 @@
+name: Fabriquer Fenêtre Asuka
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 25
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Préparer WebView2 pour le test Windows
+        shell: pwsh
+        run: ./scripts/prepare-ci-webview.ps1
+      - name: Tester les composants et construire le ZIP autonome x64
+        shell: pwsh
+        run: ./scripts/build-windows.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FenetreAsuka-Windows-10-11-x64
+          path: |
+            artifacts/FenetreAsuka-win-x64.zip
+            artifacts/FenetreAsuka-win-x64.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

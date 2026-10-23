@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><TargetFramework>net10.0</TargetFramework><IsTestProject>true</IsTestProject><IsPackable>false</IsPackable></PropertyGroup>
+ <ItemGroup>
+  <Compile Include="../../src/Asuka.Windows/SFace.cs" Link="SFace.cs"/>
+  <Content Include="../../models/*" Link="models/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest"/>
+  <PackageReference Include="OpenCvSharp4" Version="4.13.0.20260627"/>
+  <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.13.0.20260627"/>
+  <PackageReference Include="OpenCvSharp4.official.runtime.linux-x64" Version="4.13.0.20260627"/>
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
+  <PackageReference Include="xunit" Version="2.9.2"/>
+  <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2"><PrivateAssets>all</PrivateAssets></PackageReference>
+ </ItemGroup>
+</Project>
